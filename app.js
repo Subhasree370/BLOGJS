@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
 
+
 const path = require('path'); //path.join use
 const bodyParser = require('body-parser');
 
 const adminRoutes = require("./routes/admin");
 const blogRoutes = require("./routes/blog");
 const { get404 } = require('./controllers/error');
+const { response } = require('express');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -21,7 +23,10 @@ app.use('/admin', adminRoutes);
 //blogRoutes middleware//
 app.use(blogRoutes);
 
+
+console.log("after query");
 //404 page not found middleware//
 app.use(get404);
+
 
 app.listen(3000);
