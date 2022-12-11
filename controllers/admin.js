@@ -1,29 +1,39 @@
 
-const db = require('../util/database');
+const Blog = require('../models/admin');
 
 exports.adminHome = (req, res, next) => {
     res.send("<h1>admin 1</h1>");
 }
 
 exports.getAddBlog = (req, res, next) => {
-    res.send("<h1>add-blog</h1><form action='/admin/add-blog' method='POST'><input type='text' name='blogtitle'><button type='submit'>Add Blog</button></form>");
+    res.render('admin/addBlog', { pageTitle: "Add BLogs" });
 }
 
 exports.postAddBlog = (req, res, next) => {
-    console.log(req.body.blogtitle);
-    res.redirect("/admin");
+
+    const title = req.body.title;
+    const content = req.body.content;
+    const author = req.body.author;
+    const status = 1;
+
+    const blog = new Blog(null, title, content, author, status);
+
+    blog.save()
+    .then(() => {
+        res.redirect("/admin/view-blog");
+    })
+    .catch(error => {
+        console.log(error);
+    });
 }
 
-
 exports.viewBlog = (req, res, next) => {
-
-    db.execute("select * from `blog`")
-        .then(response => {
-            console.log(response[0]);
-            res.render('admin/viewblog', { pageTitle: "View All BLogs", data: response[0] });
+    Blog.fetchAll()
+        .then(resultData => {
+            res.render('admin/viewblog', { pageTitle: "View All BLogs", data: resultData[0] });
         })
         .catch(error => {
             console.log(error);
         });
-    // res.render('admin/viewblog', {pageTitle:"View All BLogs"});
 }
+
