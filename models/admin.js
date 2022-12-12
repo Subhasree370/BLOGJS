@@ -11,10 +11,15 @@ class Blog {
 
     save() {
         return db.execute("insert into `blog` (title, content, author, status) values(?, ?, ?, ?)", [this.title, this.content, this.content, this.status]);
-    }
+    };
 
     static fetchAll() {
         return db.execute("select * from `blog`");
+    };
+
+
+    static findById(id) {
+        return db.execute("select * from `blog` where id = ?", [id]);
     };
 };
 

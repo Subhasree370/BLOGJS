@@ -19,18 +19,33 @@ exports.postAddBlog = (req, res, next) => {
     const blog = new Blog(null, title, content, author, status);
 
     blog.save()
-    .then(() => {
-        res.redirect("/admin/view-blog");
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(() => {
+            res.redirect("/admin/view-blog");
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 exports.viewBlog = (req, res, next) => {
     Blog.fetchAll()
         .then(resultData => {
             res.render('admin/viewblog', { pageTitle: "View All BLogs", data: resultData[0] });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+
+exports.viewSingleBlog = (req, res, next) => {
+    const blogId = req.params.blogId;
+    
+    console.log(req.query.affid);
+    console.log(req.query.clickid);
+    Blog.findById(blogId)
+        .then(([resultData]) => {
+            res.render('admin/singleblog', { pageTitle: resultData[0].title, blog: resultData[0] });
         })
         .catch(error => {
             console.log(error);

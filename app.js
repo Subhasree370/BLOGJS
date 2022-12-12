@@ -23,8 +23,6 @@ app.use('/admin', adminRoutes);
 //blogRoutes middleware//
 app.use(blogRoutes);
 
-
-console.log("after query");
 //404 page not found middleware//
 app.use(get404);
 
