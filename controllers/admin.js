@@ -44,7 +44,7 @@ exports.viewSingleBlog = (req, res, next) => {
     console.log(req.query.affid);
     console.log(req.query.clickid);
     Blog.findById(blogId)
-        .then(([resultData]) => {
+        .then(([resultData]) => {   // array destructure
             res.render('admin/singleblog', { pageTitle: resultData[0].title, blog: resultData[0] });
         })
         .catch(error => {
