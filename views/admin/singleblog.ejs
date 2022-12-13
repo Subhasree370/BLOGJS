@@ -11,5 +11,11 @@
     <p><%= blog.content %></p>
     <br>
      <p><%= blog.author %></p>
+
+     <th colspan="2" class="text-center">
+        <a href="/admin/add-blog/">Add Blog</a>
+        <a href="/admin/edit-blog/<%= blog.id %>">Edit Blog</a>
+        <a href="/admin/delete-blog/<%= blog.id %>">Delete Blog</a>
+    </th>
 </body>
 </html>
